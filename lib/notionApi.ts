@@ -79,7 +79,6 @@ export const getSinglePost = async (slug: string) => {
 
     // 結果がない場合はnullを返す
     if (res.results.length === 0) {
-      console.log(`Post with slug ${slug} not found`);
       return null;
     }
 

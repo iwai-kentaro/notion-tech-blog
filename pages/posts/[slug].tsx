@@ -8,9 +8,10 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export const getStaticPaths = async () => {
   const allPosts = await getAllPosts();
-  const paths = allPosts.map((slug) => {
+
+  const paths = allPosts.map((post) => {
     return {
-      params: { slug: slug.slug },
+      params: { slug: post.slug },
     };
   });
   return {
@@ -21,12 +22,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const post = await getSinglePost(params.slug);
+
   if (!post || !post.metadata) {
-    return { notFound: true }; // 404 ページを表示
+    return { notFound: true };
   }
   return {
     props: {
       post,
+      fallback: false,
     },
     revalidate: 60 * 60 * 6,
   };
