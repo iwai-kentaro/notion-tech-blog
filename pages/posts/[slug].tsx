@@ -43,21 +43,22 @@ const handleClickTag = (e: React.MouseEvent, tagName: string) => {
 };
 
 const Post = ({ post }: any) => {
+  const { title, created_time, tags, updated_time } = post?.metadata || {};
   return (
     <section className="container lg:w-3/5 lg:px-2 px-5  mx-auto mt-20 mb-20">
-      <h2 className="w-full text-2xl font-medium">{post.metadata.title}</h2>
+      <h2 className="w-full text-2xl font-medium">{title}</h2>
       <div className="border-b-2 border-sky-200 border-2 w-2/3 "></div>
       <span className="text-gray-500 mb-2 inline-block">
-        {`作成日: ${dateFormat(post.metadata.created_time)}`}
+        {`作成日: ${dateFormat(created_time)}`}
       </span>
-      {post.metadata.updated_time && (
+      {updated_time && (
         <span className="text-gray-500 mb-2 inline-block ml-4">
-          {`最終更新日: ${dateFormat(post.metadata.updated_time)}`}
+          {`最終更新日: ${dateFormat(updated_time)}`}
         </span>
       )}
       <br />
       <div className="flex flex-wrap gap-2">
-        {post.metadata.tags.map((tag: string, index: number) => (
+        {tags.map((tag: string, index: number) => (
           <p
             key={index}
             className="text-s bg-cyan-600 text-white rounded-md px-2 py-1 hover:bg-cyan-700 hover:shadow-md transition duration-300 ease-in-out cursor-pointer"
