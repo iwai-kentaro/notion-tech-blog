@@ -5,7 +5,7 @@ const Tag = (props: { tags: string[] }) => {
 
   return (
     <div className="">
-      <section className="lg:w-5/5 mx-auto lg:px-2 px-5 flex flex-col gap-4 border-xl border-2 border-cyan-600  p-5 rounded-lg">
+      <section className="w-4/5 lg:w-full mx-auto lg:px-2 px-5 flex flex-col gap-4 border-xl border-2 border-cyan-600  p-5 rounded-lg">
         <div className="font-bold">タグ一覧</div>
         <div className="flex flex-wrap gap-2">
           {tags.map((tag: string, index: number) => (
