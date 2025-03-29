@@ -66,26 +66,37 @@ export const getPageMetaData = (post: PageObjectResponse): Post => {
 };
 
 export const getSinglePost = async (slug: string) => {
-  const res = await notion.databases.query({
-    database_id: process.env.NOTION_DATABASE_ID || "",
-    filter: {
-      property: "Slug",
-      rich_text: {
-        equals: slug,
+  try {
+    const res = await notion.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID || "",
+      filter: {
+        property: "Slug",
+        rich_text: {
+          equals: slug,
+        },
       },
-    },
-  });
+    });
 
-  const page = res.results[0];
-  const metadata = getPageMetaData(page as PageObjectResponse);
+    // 結果がない場合はnullを返す
+    if (res.results.length === 0) {
+      console.log(`Post with slug ${slug} not found`);
+      return null;
+    }
 
-  const mdBlocks = await n2m.pageToMarkdown(page.id);
-  const mdString = n2m.toMarkdownString(mdBlocks);
+    const page = res.results[0];
+    const metadata = getPageMetaData(page as PageObjectResponse);
 
-  return {
-    metadata,
-    markdown: mdString,
-  };
+    const mdBlocks = await n2m.pageToMarkdown(page.id);
+    const mdString = n2m.toMarkdownString(mdBlocks);
+
+    return {
+      metadata,
+      markdown: mdString,
+    };
+  } catch (error) {
+    console.error(`Error fetching post with slug ${slug}:`, error);
+    return null;
+  }
 };
 
 // TOPページ用　5つ
