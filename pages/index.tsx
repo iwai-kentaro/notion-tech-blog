@@ -1,8 +1,8 @@
 import SinglePost from "@/components/posts/SinglePost";
+import { Seo } from "@/components/seo/Seo";
 import Tag from "@/components/tag/Tag";
 import { getAllTags, getPostsFiveTopPage } from "@/lib/notionApi";
 import { GetStaticProps } from "next";
-import Head from "next/head";
 import Link from "next/link";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -27,11 +27,12 @@ export default function Home({
 }) {
   return (
     <div className="container h-full w-full mx-auto font-sans mb-20">
-      <Head>
-        <title>Tech Blog</title>
-        <meta name="description" content="Home" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={`Tech Blog `}
+        description={`Tech BlogのTOPページ`}
+        keywords={`Tech Blog, TOPページ, ブログ, 記事`}
+        url={`https://notion-tech-blog-one.vercel.app/`}
+      />
       <main className="container w-full mt-16">
         <h1 className="text-5xl font-medium text-center mb-16 font-sans">
           Tech Blog💻
