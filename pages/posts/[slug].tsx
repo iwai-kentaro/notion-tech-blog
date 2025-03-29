@@ -91,7 +91,7 @@ const Post = ({ post }: any) => {
             },
           }}
         >
-          {post.markdown.parent || ""}
+          {post?.markdown?.parent || ""}
         </ReactMarkdown>
 
         <Link href={"/"}>
