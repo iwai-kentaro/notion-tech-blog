@@ -58,7 +58,7 @@ const Post = ({ post }: any) => {
       )}
       <br />
       <div className="flex flex-wrap gap-2">
-        {tags.map((tag: string, index: number) => (
+        {tags?.map((tag: string, index: number) => (
           <p
             key={index}
             className="text-s bg-cyan-600 text-white rounded-md px-2 py-1 hover:bg-cyan-700 hover:shadow-md transition duration-300 ease-in-out cursor-pointer"
