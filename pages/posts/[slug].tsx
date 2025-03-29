@@ -21,6 +21,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const post = await getSinglePost(params.slug);
+  if (!post || !post.metadata) {
+    return { notFound: true }; // 404 ページを表示
+  }
   return {
     props: {
       post,
