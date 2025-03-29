@@ -87,25 +87,29 @@ const BlogTagPageList = ({
         <h1 className="text-5xl font-medium text-center mb-16 font-sans">
           Tech Blog💻
         </h1>
-        {postsByPage.map((post: any) => (
-          <div className="mx-auto lg:px-2 px-5" key={post.id}>
-            <SinglePost
-              title={post.title}
-              description={post.description}
-              created_time={post.created_time}
-              updated_time={post.updated_time}
-              tags={post.tags}
-              slug={post.slug}
-              isPaginationPage={true}
+        <div className="flex gap-10 lg:flex-row flex-col justify-center">
+          <div className="">
+            {postsByPage.map((post: any) => (
+              <div className="w-full mx-auto lg:px-2 px-5" key={post.id}>
+                <SinglePost
+                  title={post.title}
+                  description={post.description}
+                  created_time={post.created_time}
+                  updated_time={post.updated_time}
+                  tags={post.tags}
+                  slug={post.slug}
+                  isPaginationPage={true}
+                />
+              </div>
+            ))}
+            <Pagination
+              numberOfPage={numberOfPagesByTag}
+              tag={currentTag}
+              currentPage={currentPage}
             />
           </div>
-        ))}
-        <Pagination
-          numberOfPage={numberOfPagesByTag}
-          tag={currentTag}
-          currentPage={currentPage}
-        />
-        <Tag tags={allTags} />
+          <Tag tags={allTags} />
+        </div>
       </main>
     </div>
   );

@@ -15,7 +15,7 @@ const SinglePost = (props: Post) => {
 
   return (
     <Link href={`/posts/${slug}`}>
-      <div className="lg:w-4/5  mx-auto border border-gray-200 p-4 rounded-md mb-4 bg-gray-100 border-s-indigo-100 shadow-md hover:shadow-sm hover:translate-y-1 transform transition duration-300 ease-in-out">
+      <div className="w-full mx-auto border border-gray-200 p-4 rounded-md mb-4 bg-gray-100 border-s-indigo-100 shadow-md hover:shadow-sm hover:translate-y-1 transform transition duration-300 ease-in-out">
         <div className="flex gap-2">
           <p className="text-sm text-gray-500">
             作成日: {dateFormat(created_time)}

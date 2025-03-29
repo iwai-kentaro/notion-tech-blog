@@ -37,27 +37,30 @@ export default function Home({
         <h1 className="text-5xl font-medium text-center mb-16 font-sans">
           Tech Blog💻
         </h1>
-        {fivePosts.map((post: any) => (
-          <div className="mx-auto lg:px-2 px-5" key={post.id}>
-            <SinglePost
-              title={post.title}
-              description={post.description}
-              created_time={post.created_time}
-              updated_time={post.updated_time}
-              tags={post.tags}
-              slug={post.slug}
-              isPaginationPage={false}
-            />
+        <div className="flex gap-10 lg:flex-row flex-col justify-center">
+          <div className="">
+            {fivePosts.map((post: any) => (
+              <div className="mx-auto lg:px-2 px-5" key={post.id}>
+                <SinglePost
+                  title={post.title}
+                  description={post.description}
+                  created_time={post.created_time}
+                  updated_time={post.updated_time}
+                  tags={post.tags}
+                  slug={post.slug}
+                  isPaginationPage={false}
+                />
+              </div>
+            ))}
+            <Link
+              href={"/posts/page/1"}
+              className="lg:w-4/5 mx-auto lg:px-2 px-5 flex justify-end mt-10"
+            >
+              ...もっと見る
+            </Link>
           </div>
-        ))}
-
-        <Link
-          href={"/posts/page/1"}
-          className="lg:w-4/5 mx-auto lg:px-2 px-5 flex justify-end mt-10"
-        >
-          ...もっと見る
-        </Link>
-        <Tag tags={allTags} />
+          <Tag tags={allTags} />
+        </div>
       </main>
     </div>
   );
