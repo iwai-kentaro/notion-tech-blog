@@ -1,9 +1,9 @@
 import Pagination from "@/components/pagination/Pagination";
 import SinglePost from "@/components/posts/SinglePost";
+import { Seo } from "@/components/seo/Seo";
 import Tag from "@/components/tag/Tag";
 import { getAllTags, getNumberOfPages, getPostsByPage } from "@/lib/notionApi";
 import { GetStaticProps, GetStaticPaths } from "next";
-import Head from "next/head";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const numberOfPages = await getNumberOfPages();
@@ -55,11 +55,12 @@ const BlogPageList = ({
 }) => {
   return (
     <div className="container h-full w-full mx-auto font-sans mb-20">
-      <Head>
-        <title>Tech Blog</title>
-        <meta name="description" content="Home" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={`Tech Blog`}
+        description={`Tech Blog - ${currentPage}ページ目`}
+        keywords={`Tech Blog, ${currentPage}ページ目`}
+        url={`https://notion-tech-blog-one.vercel.app/posts/page/${currentPage}`}
+      />
       <main className="container w-full mt-16">
         <h1 className="text-5xl font-medium text-center mb-16 font-sans">
           Tech Blog💻
