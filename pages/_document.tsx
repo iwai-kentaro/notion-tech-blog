@@ -14,17 +14,6 @@ export default function Document() {
           content="Tech Blog, プログラミング, IT, ブログ, 記事"
         />
         <meta name="author" content="Tech Blog" />
-        <meta
-          name="format-detection"
-          content="telephone=no, email=no, address=no"
-        />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="/favicon.ico" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
 
         {/* 例：Noto Sans JP を読み込む */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
