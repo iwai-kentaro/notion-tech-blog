@@ -40,10 +40,10 @@ export default function Home({
   return (
     <div className="container h-full w-full mx-auto font-sans mb-20">
       <Seo
-        title={`Tech Blog `}
-        description={`Tech BlogのTOPページ`}
+        title={`${process.env.NEXT_PUBLIC_SITE_TITLE}`}
+        description={process.env.NEXT_PUBLIC_SITE_DESCRIPTION}
         keywords={`Tech Blog, TOPページ, ブログ, 記事`}
-        url={`https://notion-tech-blog-one.vercel.app/`}
+        url={process.env.NEXT_PUBLIC_SITE_URL}
       />
       <main className="container w-full mt-16">
         <h1 className="text-5xl font-medium text-center mb-16 font-sans">
