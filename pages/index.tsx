@@ -1,18 +1,26 @@
+import Pagination from "@/components/pagination/Pagination";
 import SinglePost from "@/components/posts/SinglePost";
 import { Seo } from "@/components/seo/Seo";
 import Tag from "@/components/tag/Tag";
-import { getAllTags, getPostsFiveTopPage } from "@/lib/notionApi";
+import {
+  getAllTags,
+  getNumberOfPages,
+  getPostsFiveTopPage,
+} from "@/lib/notionApi";
 import { GetStaticProps } from "next";
-import Link from "next/link";
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const fivePosts = await getPostsFiveTopPage();
   const allTags = await getAllTags();
+  const numberOfPages = await getNumberOfPages();
+  const currentPage = context.params?.page;
 
   return {
     props: {
       fivePosts,
       allTags,
+      numberOfPage: numberOfPages,
+      currentPage: Number(currentPage),
     },
     revalidate: 10,
   };
@@ -21,9 +29,13 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Home({
   fivePosts,
   allTags,
+  numberOfPage,
+  currentPage,
 }: {
   fivePosts: any;
   allTags: string[];
+  numberOfPage: number;
+  currentPage: number;
 }) {
   return (
     <div className="container h-full w-full mx-auto font-sans mb-20">
@@ -52,12 +64,11 @@ export default function Home({
                 />
               </div>
             ))}
-            <Link
-              href={"/posts/page/1"}
-              className="lg:w-4/5 mx-auto lg:px-2 px-5 flex justify-end mt-10"
-            >
-              ...もっと見る
-            </Link>
+            <Pagination
+              numberOfPage={numberOfPage}
+              tag=""
+              currentPage={currentPage}
+            />
           </div>
           <Tag tags={allTags} />
         </div>

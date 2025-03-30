@@ -2,34 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #f1f1f1;
+/* 基本的なテキストスタイル */
+.prose {
+  @apply text-gray-800 leading-relaxed;
 }
 
-img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  margin: 0 auto;
+/* 見出し */
+.prose h1 {
+  @apply text-3xl font-bold mt-8 mb-4 pb-2 border-b border-gray-200;
 }
 
-p {
-  margin: 6px 0;
-  font-weight: 400;
-  line-height: 1.2;
+.prose h2 {
+  @apply text-2xl font-semibold mt-8 mb-4 pb-1 border-b border-gray-200;
 }
 
-h2 {
-  font-size: 1.4rem;
-  margin-top: 2rem;
+.prose h3 {
+  @apply text-xl font-semibold mt-6 mb-3;
 }
 
-h3 {
-  font-size: 1.3rem;
-  margin-top: 2rem;
+.prose h4 {
+  @apply text-lg font-semibold mt-5 mb-2;
 }
 
-h4 {
-  font-size: 1.2rem;
-  margin-top: 2rem;
+.prose h5,
+.prose h6 {
+  @apply font-semibold mt-4 mb-2;
+}
+
+/* 段落 */
+.prose p {
+  @apply my-4 leading-7;
+}
+
+/* リスト */
+.prose ul {
+  @apply list-disc pl-6 my-4;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 my-4;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose li > ul,
+.prose li > ol {
+  @apply my-1;
+}
+
+/* 引用 */
+.prose blockquote {
+  @apply pl-4 py-1 my-4 border-l-4 border-cyan-500 bg-gray-50 italic;
+}
+
+/* コードブロック */
+.prose pre {
+  @apply p-4 my-4 rounded-md bg-gray-800 overflow-x-auto;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-gray-100 text-gray-800 font-mono text-sm;
+}
+
+.prose pre code {
+  @apply bg-transparent text-gray-200 p-0;
+}
+
+/* テーブル */
+.prose table {
+  @apply w-full my-6 border-collapse;
+}
+
+.prose th {
+  @apply bg-gray-100 p-2 border border-gray-300 font-semibold;
+}
+
+.prose td {
+  @apply p-2 border border-gray-300;
+}
+
+/* リンク */
+.prose a {
+  @apply text-cyan-600 underline hover:text-cyan-800 transition-colors;
+}
+
+/* 水平線 */
+.prose hr {
+  @apply my-8 border-t border-gray-300;
+}
+
+/* 強調 */
+.prose strong {
+  @apply font-bold;
+}
+
+.prose em {
+  @apply italic;
+}
+
+/* 画像とキャプション */
+.prose img {
+  @apply rounded-md shadow-md my-6;
+}
+
+.prose figure {
+  @apply my-6;
+}
+
+.prose figcaption {
+  @apply text-center text-sm text-gray-500 mt-2;
+}
+
+/* コード言語表示 */
+.prose pre:before {
+  content: attr(data-language);
+  @apply text-xs text-gray-400 float-right mb-2;
 }

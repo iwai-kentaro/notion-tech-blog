@@ -48,14 +48,16 @@ const Post = ({ post }: any) => {
     <section className="container lg:w-3/5 lg:px-2 px-5  mx-auto mt-20 mb-20">
       <h2 className="w-full text-2xl font-medium">{title}</h2>
       <div className="border-b-2 border-sky-200 border-2 w-2/3 "></div>
-      <span className="text-gray-500 mb-2 inline-block">
-        {`作成日: ${dateFormat(created_time)}`}
-      </span>
-      {updated_time && (
-        <span className="text-gray-500 mb-2 inline-block ml-4">
-          {`最終更新日: ${dateFormat(updated_time)}`}
+      <div className="flex flex-col sm:flex-row gap-2 mt-4">
+        <span className="text-gray-500 block">
+          {`作成日: ${dateFormat(created_time)}`}
         </span>
-      )}
+        {updated_time && (
+          <span className="text-gray-500 block">
+            {`最終更新日: ${dateFormat(updated_time)}`}
+          </span>
+        )}
+      </div>
       <br />
       <div className="flex flex-wrap gap-2">
         {tags?.map((tag: string, index: number) => (
