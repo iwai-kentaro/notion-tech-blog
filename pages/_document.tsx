@@ -13,7 +13,6 @@ export default function Document() {
           name="keywords"
           content="Tech Blog, プログラミング, IT, ブログ, 記事"
         />
-        <meta name="author" content="Tech Blog" />
 
         {/* 例：Noto Sans JP を読み込む */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
