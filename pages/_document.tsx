@@ -44,7 +44,7 @@ export default function Document() {
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9689878452048286"
-          crossOrigin="anonymous"
+          crossorigin="anonymous"
         ></script>
       </Head>
       <body className="antialiased">
