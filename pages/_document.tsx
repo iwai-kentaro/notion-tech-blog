@@ -40,6 +40,12 @@ export default function Document() {
           name="google-site-verification"
           content="oLuM836je70yItHEcDleJOAtg1830wfW3AO-FSdBBDY"
         />
+
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9689878452048286"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <body className="antialiased">
         <Main />
