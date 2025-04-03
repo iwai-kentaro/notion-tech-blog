@@ -40,10 +40,10 @@ const Navbar = () => {
           </Link>
 
           <Link
-            href={"#"}
+            href={"/prof"}
             className="px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-cyan-600 hover:bg-gray-50 transition-all duration-300"
           >
-            Qiita
+            プロフィール
           </Link>
         </div>
       </div>
