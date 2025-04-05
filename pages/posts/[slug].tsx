@@ -5,6 +5,7 @@ import router from "next/router";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import remarkBreaks from "remark-breaks";
 
 export const getStaticPaths = async () => {
   const allPosts = await getAllPosts();
@@ -72,9 +73,10 @@ const Post = ({ post }: any) => {
       </div>
       <div className="mt-10 prose ">
         <ReactMarkdown
+          remarkPlugins={[remarkBreaks]}
           components={{
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            code({ node, inline, className, children, ...props }: any) {
+            code({ code, inline, className, children, ...props }: any) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
                 <SyntaxHighlighter
@@ -90,6 +92,27 @@ const Post = ({ post }: any) => {
                   {children}
                 </code>
               );
+            },
+
+            // ✅ 追加：段落の中身が空なら高さ付きで表示する
+            p({ children, ...props }) {
+              // 配列として全ての子が空文字列かどうかをチェック
+              const isEmpty =
+                (Array.isArray(children) &&
+                  children.every(
+                    (child) => typeof child === "string" && child.trim() === ""
+                  )) ||
+                null;
+
+              if (isEmpty) {
+                return (
+                  <p {...props} style={{ minHeight: "1em" }}>
+                    &nbsp;
+                  </p>
+                );
+              }
+
+              return <p {...props}>{children}</p>;
             },
           }}
         >

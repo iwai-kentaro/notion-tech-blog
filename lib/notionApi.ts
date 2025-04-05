@@ -20,6 +20,16 @@ const notion = new Client({
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
+// ★ ここがポイント：paragraphブロックが空のときにも改行を付与する
+n2m.setCustomTransformer("paragraph", async (block: any) => {
+  const text = block.paragraph.rich_text.map((t: any) => t.plain_text).join("");
+
+  if (text.trim() === "") {
+    return "\n\n";
+  }
+  return text;
+});
+
 export const getAllPosts = async (): Promise<Post[]> => {
   const posts = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID || "",
@@ -77,17 +87,18 @@ export const getSinglePost = async (slug: string) => {
       },
     });
 
-    // 結果がない場合はnullを返す
     if (res.results.length === 0) {
       return null;
     }
 
-    const page = res.results[0];
-    const metadata = getPageMetaData(page as PageObjectResponse);
+    const page = res.results[0] as PageObjectResponse;
+    const metadata = getPageMetaData(page);
 
+    // 2. ページIDを元にMarkdownへ変換
     const mdBlocks = await n2m.pageToMarkdown(page.id);
     const mdString = n2m.toMarkdownString(mdBlocks);
 
+    // 3. 結果を返す
     return {
       metadata,
       markdown: mdString,
