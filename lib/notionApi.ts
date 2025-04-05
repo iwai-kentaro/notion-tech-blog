@@ -20,13 +20,20 @@ const notion = new Client({
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-// ★ ここがポイント：paragraphブロックが空のときにも改行を付与する
+// 空の段落の処理を改善
 n2m.setCustomTransformer("paragraph", async (block: any) => {
-  const text = block.paragraph.rich_text.map((t: any) => t.plain_text).join("");
-
-  if (text.trim() === "") {
-    return "\n\n";
+  const richText = block.paragraph.rich_text || [];
+  // 空のテキストブロックの場合
+  if (richText.length === 0) {
+    return "\n&nbsp;\n\n";
   }
+
+  const text = richText.map((t: any) => t.plain_text).join("");
+  // テキストが空白のみの場合
+  if (text.trim() === "") {
+    return "\n&nbsp;\n\n";
+  }
+
   return text;
 });
 

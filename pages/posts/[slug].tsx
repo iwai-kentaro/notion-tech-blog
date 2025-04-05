@@ -2,9 +2,11 @@ import { dateFormat } from "@/functions/functions";
 import { getAllPosts, getSinglePost } from "@/lib/notionApi";
 import Link from "next/link";
 import router from "next/router";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import rehypeRaw from "rehype-raw";
 import remarkBreaks from "remark-breaks";
 
 export const getStaticPaths = async () => {
@@ -71,12 +73,12 @@ const Post = ({ post }: any) => {
           </p>
         ))}
       </div>
-      <div className="mt-10 prose ">
+      <div className="mt-10 prose">
         <ReactMarkdown
           remarkPlugins={[remarkBreaks]}
+          rehypePlugins={[rehypeRaw]}
           components={{
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            code({ code, inline, className, children, ...props }: any) {
+            code({ inline, className, children, ...props }: any) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
                 <SyntaxHighlighter
@@ -94,29 +96,61 @@ const Post = ({ post }: any) => {
               );
             },
 
-            // ✅ 追加：段落の中身が空なら高さ付きで表示する
-            p({ children, ...props }) {
-              // 配列として全ての子が空文字列かどうかをチェック
-              const isEmpty =
-                (Array.isArray(children) &&
-                  children.every(
-                    (child) => typeof child === "string" && child.trim() === ""
-                  )) ||
-                null;
+            p({
+              children,
+              ...props
+            }: {
+              children?: React.ReactNode;
+            } & React.HTMLAttributes<HTMLParagraphElement>) {
+              // 子要素の配列を走査して、すべてが空かどうかを確認
+              const isEmpty = React.Children.toArray(children).every(
+                (child: any) => {
+                  if (child === null || child === undefined) return true;
+                  if (typeof child === "string") return child.trim() === "";
+                  if (React.isValidElement(child)) {
+                    // 子要素があるかどうかをチェック。子要素がない、またはすべて空なら空と判定。
+                    const inner =
+                      React.isValidElement(child) && child.props
+                        ? child.props
+                        : null;
+                    if (!inner) return true;
+                    return Array.isArray(inner)
+                      ? inner.every(
+                          (c: any) => typeof c === "string" && c.trim() === ""
+                        )
+                      : typeof inner === "string" && inner.trim() === "";
+                  }
+                  return false;
+                }
+              );
 
               if (isEmpty) {
                 return (
-                  <p {...props} style={{ minHeight: "1em" }}>
+                  <p
+                    {...props}
+                    className="empty-paragraph my-4"
+                    style={{ minHeight: "1em" }}
+                  >
                     &nbsp;
                   </p>
                 );
               }
 
-              return <p {...props}>{children}</p>;
+              return (
+                <p
+                  {...props}
+                  className={`${props.className || ""} whitespace-pre-wrap`}
+                >
+                  {children}
+                </p>
+              );
             },
           }}
         >
-          {post?.markdown?.parent || ""}
+          {post?.markdown?.parent ||
+            post?.markdown?.content ||
+            post?.markdown ||
+            ""}
         </ReactMarkdown>
 
         <Link href={"/"}>

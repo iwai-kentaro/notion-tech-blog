@@ -32,6 +32,16 @@
 /* 段落 */
 .prose p {
   @apply my-4 leading-7;
+  /* ソフト改行を無視するため、pre-wrapを削除 */
+  white-space: normal;
+}
+
+/* 空の段落の表示を改善 */
+.prose p.empty-paragraph {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  min-height: 1em;
+  line-height: 1.5;
 }
 
 /* リスト */
