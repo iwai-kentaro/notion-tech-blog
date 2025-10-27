@@ -8,6 +8,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import rehypeRaw from "rehype-raw";
 import remarkBreaks from "remark-breaks";
+import remarkToc from "remark-toc";
 
 export const getStaticPaths = async () => {
   const allPosts = await getAllPosts();
@@ -75,7 +76,19 @@ const Post = ({ post }: any) => {
       </div>
       <div className="mt-10 prose">
         <ReactMarkdown
-          remarkPlugins={[remarkBreaks]}
+          remarkPlugins={[
+            [
+              remarkToc,
+              {
+                heading: "目次", // 日本語で「目次」を探す
+                tight: true,
+                ordered: false,
+                skip: "目次", // 目次自体を目次に含めない
+                maxDepth: 3, // h3まで目次に含める
+              },
+            ],
+            remarkBreaks,
+          ]}
           rehypePlugins={[rehypeRaw]}
           components={{
             code({ inline, className, children, ...props }: any) {
